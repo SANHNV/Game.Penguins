@@ -9,7 +9,7 @@ namespace Game.Penguins.Core.Implements.Game.Players
     {
         public Player(PlayerType playerType, PlayerColor color, string name, int penguins)
         {
-            Identifier = new Guid();
+            //Identifier
             PlayerType = playerType;
             Name = name;
             Points = 0;
