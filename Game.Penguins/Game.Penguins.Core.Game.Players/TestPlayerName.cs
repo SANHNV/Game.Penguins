@@ -2,6 +2,7 @@
 
 namespace Game.Penguins.Core.Game.Players
 {
+    [TestClass]
     public class TestPlayerName : PlayerTest
     {
         [TestMethod]

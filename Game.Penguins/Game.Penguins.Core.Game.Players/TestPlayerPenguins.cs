@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Game.Penguins.Core.Game.Players
 {
+    [TestClass]
     public class TestPlayerPenguins : PlayerTest
     {
         [TestMethod]

@@ -3,12 +3,12 @@
 namespace Game.Penguins.Core.Game.GameBoard.UnitTests
 {
     [TestClass]
-    public class TestPenguinPlayer : GameBoardTest
+    public class CellPenguin : GameBoardTest
     {
         [TestMethod]
-        public void TestPinguin()
+        public void TestCellPenguins()
         {
-            Assert.AreEqual(TestPlayer.Identifier, TestPenguin.Player.Identifier);
+            Assert.AreEqual(TestPenguin, TestCells[0].CurrentPenguin);
         }
     }
 }

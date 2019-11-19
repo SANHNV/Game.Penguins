@@ -1,6 +1,5 @@
 using Game.Penguins.Core.Implements.Game.GameBoard;
 using Game.Penguins.Core.Implements.Game.Players;
-using Game.Penguins.Core.Interfaces.Game.GameBoard;
 using Game.Penguins.Core.Interfaces.Game.Players;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
@@ -16,13 +15,16 @@ namespace Game.Penguins.Core.Game.GameBoard.UnitTests
         {
             TestPlayer = new Player((PlayerType)0, (PlayerColor)0, "test", 2);
             TestPenguin = new Penguin(TestPlayer);
-            TestCells.Add(new Cell((CellType)0, 0, TestPenguin));
-            TestCells.Add(new Cell((CellType)1, 1, TestPenguin));
-            TestCells.Add(new Cell((CellType)2, 2, TestPenguin));
-            TestCells.Add(new Cell((CellType)3, 3, TestPenguin));
+            TestCells.Add(new Cell((Interfaces.Game.GameBoard.CellType)0, 0));
+            TestCells[0].CurrentPenguin = TestPenguin;
+            TestCells.Add(new Cell((Interfaces.Game.GameBoard.CellType)1, 1));
+            TestCells.Add(new Cell((Interfaces.Game.GameBoard.CellType)2, 2));
+            TestCells.Add(new Cell((Interfaces.Game.GameBoard.CellType)3, 3));
+            TestBoard = new Plateau();
         }
         public Player TestPlayer { get; }
         public Penguin TestPenguin { get; }
         public List<Cell> TestCells { get; }
+        public Plateau TestBoard { get; }
     }
 }

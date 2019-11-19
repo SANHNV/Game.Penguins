@@ -29,6 +29,6 @@ namespace Game.Penguins.Core.Implements.Game.GameBoard
         /// <summary>
         /// Plateau composé de Cell
         /// </summary>
-        public ICell[,] Board { get; }
+        public ICell[,] Board { get; set; }
     }
 }
