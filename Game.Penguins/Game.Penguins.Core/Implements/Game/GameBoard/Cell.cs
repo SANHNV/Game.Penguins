@@ -7,11 +7,11 @@ namespace Game.Penguins.Core.Implements.Game.GameBoard
 {
     public class Cell : ICell
     {
-        public Cell(CellType cellType, int fishCount, IPenguin currentPenguin)
+        public Cell(CellType cellType, int fishCount)
         {
             CellType = cellType;
             FishCount = fishCount;
-            CurrentPenguin = currentPenguin;
+            CurrentPenguin = null;
         }
 
         public CellType CellType { get; set; }

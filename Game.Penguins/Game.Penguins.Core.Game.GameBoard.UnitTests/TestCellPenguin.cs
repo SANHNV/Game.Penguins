@@ -1,8 +1,8 @@
-﻿using Game.Penguins.Core.Interfaces.Game.GameBoard;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Game.Penguins.Core.Game.GameBoard.UnitTests
 {
+    [TestClass]
     public class TestCellPenguin : GameBoardTest
     {
         [TestMethod]

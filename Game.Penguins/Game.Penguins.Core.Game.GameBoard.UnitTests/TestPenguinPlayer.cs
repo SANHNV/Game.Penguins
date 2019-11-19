@@ -8,7 +8,7 @@ namespace Game.Penguins.Core.Game.GameBoard.UnitTests
         [TestMethod]
         public void TestPinguin()
         {
-            Assert.AreEqual(TestPlayer, TestPenguin.Player);
+            Assert.AreEqual(TestPlayer.Identifier, TestPenguin.Player.Identifier);
         }
     }
 }

@@ -4,7 +4,8 @@ using System.Text;
 
 namespace Game.Penguins.Core.Implements.Game.GameBoard
 {
-    class Game
+    public class Game
     {
+
     }
 }
