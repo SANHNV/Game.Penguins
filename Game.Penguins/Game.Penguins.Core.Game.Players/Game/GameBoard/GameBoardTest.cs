@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 //A modifier comme pour PlayerTest
 
-namespace Game.Penguins.Core.Game.GameBoard.UnitTests
+namespace Game.Penguins.Core.UnitTests.Game.GameBoard
 {
     [TestClass]
     public class GameBoardTest

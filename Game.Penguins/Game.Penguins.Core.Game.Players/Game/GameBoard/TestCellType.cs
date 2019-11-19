@@ -1,7 +1,7 @@
 ﻿using Game.Penguins.Core.Interfaces.Game.GameBoard;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Game.Penguins.Core.Game.GameBoard.UnitTests
+namespace Game.Penguins.Core.UnitTests.Game.GameBoard
 {
     public class TestCellType : GameBoardTest
     {

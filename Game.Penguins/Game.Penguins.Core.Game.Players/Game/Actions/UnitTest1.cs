@@ -1,6 +1,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Game.Penguins.Core.Game.Action.UnitTests
+namespace Game.Penguins.Core.UnitTests.Game.Action
 {
     [TestClass]
     public class UnitTest1

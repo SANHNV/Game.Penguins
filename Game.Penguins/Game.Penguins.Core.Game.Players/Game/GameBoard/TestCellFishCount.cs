@@ -1,7 +1,7 @@
 ﻿
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Game.Penguins.Core.Game.GameBoard.UnitTests
+namespace Game.Penguins.Core.UnitTests.Game.GameBoard
 {
     class TestCellFishCount : GameBoardTest
     {

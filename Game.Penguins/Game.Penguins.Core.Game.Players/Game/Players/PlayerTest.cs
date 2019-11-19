@@ -3,7 +3,7 @@ using Game.Penguins.Core.Interfaces.Game.Players;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 
-namespace Game.Penguins.Core.Game.Players
+namespace Game.Penguins.Core.UnitTests.Game.Players
 {
     [TestClass]
     public class PlayerTest

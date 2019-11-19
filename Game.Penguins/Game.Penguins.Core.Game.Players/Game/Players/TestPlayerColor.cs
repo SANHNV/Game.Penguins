@@ -2,7 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 
-namespace Game.Penguins.Core.Game.Players
+namespace Game.Penguins.Core.UnitTests.Game.Players
 {
     public class TestPlayerColor : PlayerTest
     {
