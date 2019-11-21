@@ -19,12 +19,12 @@ namespace Game.Penguins.Core.Implements.Game.GameBoard
             points.AddRange(Enumerable.Repeat(3, 10).ToList());
             var random = new Random();
 
-            for (int ver=0; ver<8;ver++)
+            for (int hor=0; hor<8;hor++)
             {
-                for(int hor=0; hor<8;hor++)
+                for(int ver=0; ver<8;ver++)
                 {
                     var pointIndex = random.Next(0, points.Count);
-                    Board[hor, ver] = new Cell(CellType.Fish, pointIndex, ver, hor);
+                    Board[hor, ver] = new Cell(CellType.Fish, points[pointIndex], ver, hor);
                     points.RemoveAt(pointIndex);
                 }
             }
@@ -43,14 +43,14 @@ namespace Game.Penguins.Core.Implements.Game.GameBoard
         public List<Cell> GetMyPenguins(Guid playerIdentifier)
         {
             var result = new List<Cell>();
-            var board = Board as Cell[,];
             for (int i = 0; i < 8; i++)
             {
                 for (int j = 0; j < 8; j++)
                 {
+                    Cell temp = Board[i, j] as Cell;
                     //CellWithPenguin && Player==Player
                     if (Board[i, j].CellType == CellType.FishWithPenguin && Board[i, j].CurrentPenguin.Player.Identifier == playerIdentifier)
-                        result.Add(board[i, j]);
+                        result.Add(temp);
                 }
             }
 
@@ -68,6 +68,7 @@ namespace Game.Penguins.Core.Implements.Game.GameBoard
             for (int i = 0; i <= 5; i++)
             {
                 Cell temp = GetAvailableCell(origin, (Direction)i);
+                // use try catch to replace if ?
                 if (temp!= null)
                     result.Add(temp);
             }

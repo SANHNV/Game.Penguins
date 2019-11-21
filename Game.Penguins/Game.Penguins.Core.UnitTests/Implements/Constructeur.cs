@@ -43,7 +43,7 @@ namespace Game.Penguins.Core.UnitTests
  
         public List<Player> TestPlayers { get; }
         public Penguin TestPenguin { get; }
-        public List<Cell> TestCells { get; }
+        public List<Cell> TestCells { get; set; }
         public Plateau TestBoard { get; }
 
     }

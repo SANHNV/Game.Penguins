@@ -12,7 +12,7 @@ namespace Game.Penguins.Core.Implements.Game.GameBoard
         /// <summary>
         /// Constructor of GAME
         /// </summary>
-        public Game() { }
+        public Game() { Players = new List<IPlayer>(); }
         public IBoard Board { get; set; }
         public NextActionType NextAction { get; set; }
         public IPlayer CurrentPlayer { get; set; }
@@ -85,14 +85,13 @@ namespace Game.Penguins.Core.Implements.Game.GameBoard
         /// </summary>
         private void InitPlayers()
         {
-            var players = Players as List<Player>;
             penguinsByPlayer = Players.Count == 2 ? 4 : (Players.Count == 3 ? 3 : 2);
-            foreach (var player in players)
+            foreach (var player in Players)
             {
-                player.Penguins = 0;
-                player.Color = (PlayerColor)Players.IndexOf(player);
+                var p = player as Player;
+                p.Penguins = 0;
+                p.Color = (PlayerColor)Players.IndexOf(player);
             }
-            Players = players as IList<IPlayer>;
         }
 
         /// <summary>
@@ -100,7 +99,7 @@ namespace Game.Penguins.Core.Implements.Game.GameBoard
         /// </summary>
         private void CheckNextPlayer()
         {
-            currentPlayerIndex = (currentPlayerIndex + 1 > Players.Count) ? 0 : currentPlayerIndex+1 ;
+            currentPlayerIndex = (currentPlayerIndex +1 >= Players.Count) ? 0 : currentPlayerIndex+1 ;
             CurrentPlayer = Players[currentPlayerIndex];
         }
 
@@ -203,7 +202,7 @@ namespace Game.Penguins.Core.Implements.Game.GameBoard
             var currentPlayer = CurrentPlayer as Player;
             var cell = Board.Board[h, v] as Cell;
 
-            if (cell.FishCount ==1)
+            if (cell.FishCount ==1 && cell.CellType!=CellType.FishWithPenguin)
             {
                 cell.CellType = CellType.FishWithPenguin;
                 cell.CurrentPenguin = new Penguin(currentPlayer);
@@ -220,7 +219,6 @@ namespace Game.Penguins.Core.Implements.Game.GameBoard
         /// </summary>
         public void StartGame()
         {
-            Players = new List<IPlayer>();
             InitPlayers();
 
             Board = new Plateau();
