@@ -258,7 +258,7 @@ namespace Game.Penguins.ViewModels
             : base()
         {
             // TODO : Initialize with the right implementation
-            game = (IGame)new Game.Penguins.Core.Implements.Game.GameBoard.Game();
+            game = (IGame)new Core.Implements.Game.GameBoard.Game();
             //game = new CustomGame();
             
             game.StateChanged += Game_StateChanged;

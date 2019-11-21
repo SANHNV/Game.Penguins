@@ -12,7 +12,7 @@ namespace Game.Penguins.Core.Implements.Game.GameBoard
         /// <summary>
         /// Constructor of GAME
         /// </summary>
-        public Game() {}
+        public Game() { }
         public IBoard Board { get; set; }
         public NextActionType NextAction { get; set; }
         public IPlayer CurrentPlayer { get; set; }
@@ -30,7 +30,8 @@ namespace Game.Penguins.Core.Implements.Game.GameBoard
         /// <returns>Player</returns>
         public IPlayer AddPlayer(string playerName, PlayerType playerType)
         {
-            Players.Add(new Player(playerType, playerName));
+            IPlayer temp = new Player(playerType, playerName);
+            Players.Add(temp);
             return Players.Last();
         }
 
@@ -84,16 +85,18 @@ namespace Game.Penguins.Core.Implements.Game.GameBoard
         /// </summary>
         private void InitPlayers()
         {
+            var players = Players as List<Player>;
             penguinsByPlayer = Players.Count == 2 ? 4 : (Players.Count == 3 ? 3 : 2);
-            foreach (var player in Players)
+            foreach (var player in players)
             {
                 player.Penguins = 0;
                 player.Color = (PlayerColor)Players.IndexOf(player);
             }
+            Players = players as IList<IPlayer>;
         }
 
         /// <summary>
-        /// Augmente l'index du currentPlayer
+        /// Increase index of currentPlayer
         /// </summary>
         private void CheckNextPlayer()
         {
@@ -102,7 +105,7 @@ namespace Game.Penguins.Core.Implements.Game.GameBoard
         }
 
         /// <summary>
-        /// 
+        /// Modify NextAction Type
         /// </summary>
         private void CheckNextAction()
         {
@@ -130,7 +133,7 @@ namespace Game.Penguins.Core.Implements.Game.GameBoard
         }
 
         /// <summary>
-        /// 
+        /// Place Penguin on destination, take points and nullify origin
         /// </summary>
         /// <param name="origin"></param>
         /// <param name="destination"></param>
@@ -158,7 +161,7 @@ namespace Game.Penguins.Core.Implements.Game.GameBoard
         }
 
         /// <summary>
-        /// 
+        /// Check if a Penguin is blocked and act
         /// </summary>
         private void CheckBlockedPenguins()
         {
@@ -170,7 +173,7 @@ namespace Game.Penguins.Core.Implements.Game.GameBoard
                 foreach (var penguinCell in penguinCells)
                 {
                     // We check if the destination cell is specific (no available cell in a next round) :
-                    if (board.GetAvailableCellsAround(penguinCell).Count == 0)
+                    if (board.GetListCellsAvailableAround(penguinCell).Count == 0)
                     { 
                         currentPlayer.Points += penguinCell.FishCount;
                         penguinCell.CellType = CellType.Water;
@@ -182,7 +185,7 @@ namespace Game.Penguins.Core.Implements.Game.GameBoard
         }
 
         /// <summary>
-        /// 
+        /// TO DO AI
         /// </summary>
         public void PlacePenguin()
         {
@@ -190,15 +193,24 @@ namespace Game.Penguins.Core.Implements.Game.GameBoard
                 CurrentPlayer.IA.PlacePenguin();*/
         }
 
-        public void PlacePenguinManual(int x, int y)
+        /// <summary>
+        /// Place Penguin on Cell with 1 fish
+        /// </summary>
+        /// <param name="h"></param>
+        /// <param name="v"></param>
+        public void PlacePenguinManual(int h, int v)
         {
-            if (Board.Board[x, y].CellType != CellType.Fish)
-                return;
+            var currentPlayer = CurrentPlayer as Player;
+            var cell = Board.Board[h, v] as Cell;
 
-            Board.Board[x, y].CellType = CellType.FishWithPenguin;
-            Board.Board[x, y].CurrentPenguin = new Penguin(CurrentPlayer);
+            if (cell.FishCount ==1)
+            {
+                cell.CellType = CellType.FishWithPenguin;
+                cell.CurrentPenguin = new Penguin(currentPlayer);
+            }
+            else { return; }
 
-            CurrentPlayer.Penguins++;
+            currentPlayer.Penguins++;
 
             CheckActions();
         }
@@ -208,6 +220,7 @@ namespace Game.Penguins.Core.Implements.Game.GameBoard
         /// </summary>
         public void StartGame()
         {
+            Players = new List<IPlayer>();
             InitPlayers();
 
             Board = new Plateau();
