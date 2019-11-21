@@ -1,5 +1,4 @@
 ﻿using Game.Penguins.Commands;
-using Game.Penguins.Core.Interfaces.Game.Actions;
 using Game.Penguins.Core.Interfaces.Game.GameBoard;
 using Game.Penguins.Core.Interfaces.Game.Players;
 using Game.Penguins.Framework;
@@ -259,7 +258,7 @@ namespace Game.Penguins.ViewModels
             : base()
         {
             // TODO : Initialize with the right implementation
-            game = (IGame)new CustomGame();
+            game = (IGame)new Game.Penguins.Core.Implements.Game.GameBoard.Game();
             //game = new CustomGame();
             
             game.StateChanged += Game_StateChanged;
