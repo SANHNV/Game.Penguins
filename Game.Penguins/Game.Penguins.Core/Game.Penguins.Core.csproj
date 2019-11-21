@@ -8,8 +8,4 @@
     <PackageReference Include="Common.Logging" Version="3.4.1" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Implements\Game\Actions\" />
-  </ItemGroup>
-
 </Project>

@@ -1,5 +1,7 @@
-﻿using Game.Penguins.Core.Interfaces.Game.GameBoard;
+﻿using Game.Penguins.Core.Implements.Game.Actions;
+using Game.Penguins.Core.Interfaces.Game.GameBoard;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Game.Penguins.Core.Implements.Game.GameBoard
@@ -11,7 +13,7 @@ namespace Game.Penguins.Core.Implements.Game.GameBoard
         /// </summary>
         public Plateau()
         {
-            P_Board = new Cell[8, 8];
+            Board = new Cell[8, 8];
             var points = Enumerable.Repeat(1, 34).ToList();
             points.AddRange(Enumerable.Repeat(2, 20).ToList());
             points.AddRange(Enumerable.Repeat(3, 10).ToList());
@@ -27,16 +29,106 @@ namespace Game.Penguins.Core.Implements.Game.GameBoard
                 }
             }
         }
-        private Cell[,] P_Board { get; set; }
+
         /// <summary>
         /// Plateau composé de Cell
         /// </summary>
-        public ICell[,] Board
+        public ICell[,] Board { get; set; }
+
+        /// <summary>
+        /// Returns List de cells with penguins for a player
+        /// </summary>
+        /// <param name="playerIdentifier"></param>
+        /// <returns></returns>
+        public List<Cell> GetMyPenguins(Guid playerIdentifier)
         {
-            get
+            var result = new List<Cell>();
+            var board = Board as Cell[,];
+            for (int i = 0; i < 8; i++)
             {
-                return P_Board;
+                for (int j = 0; j < 8; j++)
+                {
+                    //CellWithPenguin && Player==Player
+                    if (Board[i, j].CellType == CellType.FishWithPenguin && Board[i, j].CurrentPenguin.Player.Identifier == playerIdentifier)
+                        result.Add(board[i, j]);
+                }
             }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Return List Cell Available Around
+        /// </summary>
+        /// <param name="origin"></param>
+        /// <returns></returns>
+        public List<Cell> GetListCellsAvailableAround(Cell origin)
+        {
+            var result = new List<Cell>();
+            for (int i = 0; i <= 5; i++)
+            {
+                Cell temp = GetAvailableCell(origin, (Direction)i);
+                if (temp!= null)
+                    result.Add(temp);
+            }
+            return result ;
+        }
+
+        /// <summary>
+        /// Return Cell in direction or null
+        /// </summary>
+        /// <param name="origin"></param>
+        /// <param name="direction"></param>
+        /// <returns></returns>
+        public Cell GetAvailableCell(Cell origin, Direction direction)
+        {
+            var board = Board as Cell[,];
+            Cell destination = null;
+            int xDest = 0;
+            switch (direction)
+            {
+                case Direction.Left:
+                    if (origin.H > 0)
+                    {
+                        destination = board[origin.H - 1, origin.V];
+                    }
+                    break;
+                case Direction.Right:
+                    if (origin.H < 7)
+                    {
+                        destination = board[origin.H + 1, origin.V];
+                    }
+                    break;
+                case Direction.TopLeft:
+                    xDest = (origin.H % 2 == 0) ? origin.H : origin.H -1;
+                    if (xDest >= 0 && origin.V > 0)
+                    {
+                        destination = board[xDest, origin.V - 1];
+                    }
+                    break;
+                case Direction.TopRight:
+                    xDest = (origin.H % 2 == 0) ? origin.H +1 : origin.H;
+                    if (xDest < 8 && origin.V > 0)
+                    {
+                        destination = board[xDest, origin.V - 1];
+                    }
+                    break;
+                case Direction.BottomLeft:
+                    xDest = (origin.H % 2 == 0) ? origin.H : origin.H -1;
+                    if (xDest >= 0 && origin.V < 7)
+                    {
+                        destination = board[xDest, origin.V + 1];
+                    }
+                    break;
+                case Direction.BottomRight:
+                    xDest = (origin.H % 2 == 0) ? origin.H +1 : origin.H;
+                    if (xDest < 8 && origin.V < 7)
+                    {
+                        destination = board[xDest, origin.V + 1];
+                    }
+                    break;
+            }
+            return destination;
         }
     }
 }

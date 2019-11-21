@@ -1,11 +1,12 @@
-﻿using Game.Penguins.Core.Interfaces.Game.GameBoard;
+﻿using Game.Penguins.Core.Implements.Game.Players;
+using Game.Penguins.Core.Interfaces.Game.GameBoard;
 using Game.Penguins.Core.Interfaces.Game.Players;
 
 namespace Game.Penguins.Core.Implements.Game.GameBoard
 {
     public class Penguin : IPenguin
     {
-        public Penguin(IPlayer player)
+        public Penguin(Player player)
         {
             Player = player;
         }
