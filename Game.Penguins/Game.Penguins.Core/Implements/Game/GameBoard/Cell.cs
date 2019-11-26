@@ -13,10 +13,57 @@ namespace Game.Penguins.Core.Implements.Game.GameBoard
             V = v;
             H = h;
         }
-        public CellType CellType { get; set; }
-        public int FishCount { get; set; }
 
-        public IPenguin CurrentPenguin { get; set; }
+        private CellType cellType { get; set; }
+        public CellType CellType
+        {
+            get
+            {
+                return cellType;
+            }
+
+            set
+            {
+                cellType = value;
+                if (StateChanged != null)
+                    StateChanged.Invoke(this, null);
+
+            }
+        }
+
+        private int fishCount { get; set; }
+        public int FishCount
+        {
+            get
+            {
+                return fishCount;
+            }
+
+            set
+            {
+                fishCount = value;
+                if (StateChanged != null)
+                    StateChanged.Invoke(this, null);
+
+            }
+        }
+
+        private IPenguin currentPenguin { get; set; }
+        public IPenguin CurrentPenguin
+        {
+            get
+            {
+                return currentPenguin;
+            }
+
+            set
+            {
+                currentPenguin = value;
+                if (StateChanged != null)
+                    StateChanged.Invoke(this, null);
+
+            }
+        }
 
         public int H { get; }
         public int V { get; }

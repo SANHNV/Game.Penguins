@@ -14,9 +14,57 @@ namespace Game.Penguins.Core.Implements.Game.GameBoard
         /// </summary>
         public Game() { Players = new List<IPlayer>(); }
         public IBoard Board { get; set; }
-        public NextActionType NextAction { get; set; }
-        public IPlayer CurrentPlayer { get; set; }
-        public IList<IPlayer> Players { get; set; }
+
+        private NextActionType nextActionType { get; set; }
+        public NextActionType NextAction
+        {
+            get
+            {
+                return nextActionType;
+            }
+
+            set
+            {
+                nextActionType = value;
+                if (StateChanged != null)
+                    StateChanged.Invoke(this, null);
+
+            }
+        }
+
+        private IPlayer currentPlayer { get; set; }
+        public IPlayer CurrentPlayer
+        {
+            get
+            {
+                return currentPlayer;
+            }
+
+            set
+            {
+                currentPlayer = value;
+                if (StateChanged != null)
+                    StateChanged.Invoke(this, null);
+
+            }
+        }
+
+        private IList<IPlayer> players { get; set; }
+        public IList<IPlayer> Players
+        {
+            get
+            {
+                return players;
+            }
+
+            set
+            {
+                players = value;
+                if (StateChanged != null)
+                    StateChanged.Invoke(this, null);
+
+            }
+        }
 
         public event EventHandler StateChanged;
         private int currentPlayerIndex = 0;
@@ -76,8 +124,8 @@ namespace Game.Penguins.Core.Implements.Game.GameBoard
 
             CheckNextAction();
 
-            /*if (StateChanged != null)
-                StateChanged.Invoke(this, null);*/
+            if (StateChanged != null)
+                StateChanged.Invoke(this, null);
         }
 
         /// <summary>
