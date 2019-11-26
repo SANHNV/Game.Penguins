@@ -32,7 +32,6 @@ namespace Game.Penguins.Core.Implements.Game.Players
                 color = value;
                 if (StateChanged != null)
                     StateChanged.Invoke(this, null);
-
             }
         }
 
@@ -49,7 +48,6 @@ namespace Game.Penguins.Core.Implements.Game.Players
                 name = value;
                 if (StateChanged != null)
                     StateChanged.Invoke(this, null);
-
             }
         }
 
@@ -66,7 +64,6 @@ namespace Game.Penguins.Core.Implements.Game.Players
                 points = value;
                 if (StateChanged != null)
                     StateChanged.Invoke(this, null);
-
             }
         }
 
@@ -83,7 +80,6 @@ namespace Game.Penguins.Core.Implements.Game.Players
                 penguins = value;
                 if (StateChanged != null)
                     StateChanged.Invoke(this, null);
-
             }
         }
 

@@ -58,18 +58,18 @@ namespace Game.Penguins.Core.Implements.Game.GameBoard
         }
 
         /// <summary>
-        /// Return List Cell Available Around
+        /// Return List Cell Available one case Around
         /// </summary>
         /// <param name="origin"></param>
         /// <returns></returns>
         public List<Cell> GetListCellsAvailableAround(Cell origin)
         {
             var result = new List<Cell>();
-            for (int i = 0; i <= 5; i++)
+            for (int i = 0; i < 6; i++)
             {
                 Cell temp = GetAvailableCell(origin, (Direction)i);
-                // use try catch to replace if ?
-                if (temp!= null)
+
+                if (temp!= null && temp.CellType == CellType.Fish)
                     result.Add(temp);
             }
             return result ;
@@ -85,47 +85,47 @@ namespace Game.Penguins.Core.Implements.Game.GameBoard
         {
             var board = Board as Cell[,];
             Cell destination = null;
-            int xDest = 0;
+            int vDest = 0;
             switch (direction)
             {
                 case Direction.Left:
-                    if (origin.H > 0)
+                    if (origin.V > 0)
                     {
-                        destination = board[origin.H - 1, origin.V];
+                        destination = board[origin.H, origin.V-1];
                     }
                     break;
                 case Direction.Right:
-                    if (origin.H < 7)
+                    if (origin.V < 7)
                     {
-                        destination = board[origin.H + 1, origin.V];
+                        destination = board[origin.H, origin.V+1];
                     }
                     break;
                 case Direction.TopLeft:
-                    xDest = (origin.H % 2 == 0) ? origin.H : origin.H -1;
-                    if (xDest >= 0 && origin.V > 0)
+                    vDest = (origin.H % 2 == 0) ? origin.V : origin.V-1;
+                    if (vDest >= 0 && origin.H > 0)
                     {
-                        destination = board[xDest, origin.V - 1];
+                        destination = board[origin.H-1, vDest];
                     }
                     break;
                 case Direction.TopRight:
-                    xDest = (origin.H % 2 == 0) ? origin.H +1 : origin.H;
-                    if (xDest < 8 && origin.V > 0)
+                    vDest = (origin.H % 2 == 0) ? origin.V+1 : origin.V;
+                    if (vDest < 8 && origin.H > 0)
                     {
-                        destination = board[xDest, origin.V - 1];
+                        destination = board[origin.H-1, vDest];
                     }
                     break;
                 case Direction.BottomLeft:
-                    xDest = (origin.H % 2 == 0) ? origin.H : origin.H -1;
-                    if (xDest >= 0 && origin.V < 7)
+                    vDest = (origin.H % 2 == 0) ? origin.V : origin.V -1;
+                    if (vDest >= 0 && origin.H < 7)
                     {
-                        destination = board[xDest, origin.V + 1];
+                        destination = board[origin.H+1, vDest];
                     }
                     break;
                 case Direction.BottomRight:
-                    xDest = (origin.H % 2 == 0) ? origin.H +1 : origin.H;
-                    if (xDest < 8 && origin.V < 7)
+                    vDest = (origin.H % 2 == 0) ? origin.V+1 : origin.V;
+                    if (vDest < 8 && origin.H < 7)
                     {
-                        destination = board[xDest, origin.V + 1];
+                        destination = board[origin.H+1, vDest];
                     }
                     break;
             }

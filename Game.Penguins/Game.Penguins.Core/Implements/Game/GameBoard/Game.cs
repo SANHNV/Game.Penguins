@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Game.Penguins.Core.Implements.Game.Actions;
 using Game.Penguins.Core.Implements.Game.Players;
 using Game.Penguins.Core.Interfaces.Game.GameBoard;
 using Game.Penguins.Core.Interfaces.Game.Players;
@@ -13,6 +14,13 @@ namespace Game.Penguins.Core.Implements.Game.GameBoard
         /// Constructor of GAME
         /// </summary>
         public Game() { Players = new List<IPlayer>(); }
+
+        private Plateau plateau {
+            get
+            {
+                return Board as Plateau;
+            }
+        }
         public IBoard Board { get; set; }
 
         private NextActionType nextActionType { get; set; }
@@ -28,7 +36,6 @@ namespace Game.Penguins.Core.Implements.Game.GameBoard
                 nextActionType = value;
                 if (StateChanged != null)
                     StateChanged.Invoke(this, null);
-
             }
         }
 
@@ -45,7 +52,6 @@ namespace Game.Penguins.Core.Implements.Game.GameBoard
                 currentPlayer = value;
                 if (StateChanged != null)
                     StateChanged.Invoke(this, null);
-
             }
         }
 
@@ -62,7 +68,6 @@ namespace Game.Penguins.Core.Implements.Game.GameBoard
                 players = value;
                 if (StateChanged != null)
                     StateChanged.Invoke(this, null);
-
             }
         }
 
@@ -88,7 +93,50 @@ namespace Game.Penguins.Core.Implements.Game.GameBoard
         /// </summary>
         public void Move()
         {
-            //TO DO MAYBE
+            //TO DO MAYBE AI
+        }
+
+        /// <summary>
+        /// Get a list of possible moves and return true if destination is one of them
+        /// </summary>
+        /// <param name="origin"></param>
+        /// <param name="destination"></param>
+        /// <returns>bool</returns>
+        public bool CheckMove(Cell origin, Cell destination)
+        {
+            bool possible = false;
+            List<Cell> possibleMove = new List<Cell>();
+            Cell newOrigin = origin;
+            Cell temp = null;
+
+            //Get all possible moves from origin
+            for (int i = 0; i < 6; i++)
+            {
+                do
+                {
+                    temp = plateau.GetAvailableCell(newOrigin, (Direction)i);
+                    if (temp != null && temp.CellType == CellType.Fish)
+                    {
+                        possibleMove.Add(temp); //Merci Simon !
+                    }
+                    else { temp = null; }
+                    newOrigin = temp;
+                }
+                while (temp != null);
+                newOrigin = origin;
+            }
+
+            //Check if destination is a possibleMove
+            for (int i=0;i<possibleMove.Count;i++)
+            {
+                if (possibleMove[i].V==destination.V && possibleMove[i].H == destination.H)
+                {
+                    possible = true;
+                    break;
+                }
+            }
+
+            return possible;
         }
 
         /// <summary>
@@ -99,15 +147,8 @@ namespace Game.Penguins.Core.Implements.Game.GameBoard
         /// <param name="destination"></param>
         public void MoveManual(ICell origin, ICell destination)
         {
-            //Fonction Pinguin du Joueur bien au Joueur
-            //Fonction return List<Cell> déplacement possible
-            // Récupération destination do while
-            //for ()
-            // if Cell destination == List<Cell>[i]
-            //      fonction vraiment faire le déplacement
-            MovePenguinOnMap(origin, destination);
-            //      break;
-            //
+            if (CheckMove(origin as Cell, destination as Cell))
+                MovePenguinOnMap(origin, destination);
 
             // Check blocked penguins : aka ménage
             CheckBlockedPenguins();

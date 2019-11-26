@@ -27,7 +27,6 @@ namespace Game.Penguins.Core.Implements.Game.GameBoard
                 cellType = value;
                 if (StateChanged != null)
                     StateChanged.Invoke(this, null);
-
             }
         }
 
@@ -44,7 +43,6 @@ namespace Game.Penguins.Core.Implements.Game.GameBoard
                 fishCount = value;
                 if (StateChanged != null)
                     StateChanged.Invoke(this, null);
-
             }
         }
 
@@ -61,7 +59,6 @@ namespace Game.Penguins.Core.Implements.Game.GameBoard
                 currentPenguin = value;
                 if (StateChanged != null)
                     StateChanged.Invoke(this, null);
-
             }
         }
 
