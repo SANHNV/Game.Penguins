@@ -109,7 +109,7 @@ namespace Game.Penguins.Core.Implements.Game.GameBoard
             Cell newOrigin = origin;
             Cell temp = null;
 
-            //Get all possible moves from origin
+            //Get all possible moves from origin, one direction at a time, cell by cell
             for (int i = 0; i < 6; i++)
             {
                 do
@@ -118,9 +118,9 @@ namespace Game.Penguins.Core.Implements.Game.GameBoard
                     if (temp != null && temp.CellType == CellType.Fish)
                     {
                         possibleMove.Add(temp); //Merci Simon !
+                        newOrigin = temp;
                     }
                     else { temp = null; }
-                    newOrigin = temp;
                 }
                 while (temp != null);
                 newOrigin = origin;
@@ -148,12 +148,13 @@ namespace Game.Penguins.Core.Implements.Game.GameBoard
         public void MoveManual(ICell origin, ICell destination)
         {
             if (CheckMove(origin as Cell, destination as Cell))
+            {
+                //Make the move
                 MovePenguinOnMap(origin, destination);
-
-            // Check blocked penguins : aka ménage
-            CheckBlockedPenguins();
-
-            CheckActions();
+                // Check blocked penguins : aka ménage
+                CheckBlockedPenguins();
+                CheckActions();
+            }
         }
 
         /// <summary>
@@ -267,6 +268,7 @@ namespace Game.Penguins.Core.Implements.Game.GameBoard
                         penguinCell.CellType = CellType.Water;
                         penguinCell.FishCount = 0;
                         penguinCell.CurrentPenguin = null;
+                        //gérer pingouin
                     }
                 }
             }

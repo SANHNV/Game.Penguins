@@ -38,13 +38,15 @@ namespace Game.Penguins.Core.UnitTests
             TestBoard = new Plateau();
 
             //Game Init
-            //TO DO
+            TestGame = new Core.Implements.Game.GameBoard.Game();
         }
  
         public List<Player> TestPlayers { get; }
         public Penguin TestPenguin { get; }
         public List<Cell> TestCells { get; set; }
         public Plateau TestBoard { get; }
+
+        public Core.Implements.Game.GameBoard.Game TestGame { get; }
 
     }
 }

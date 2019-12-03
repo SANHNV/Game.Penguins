@@ -24,7 +24,7 @@ namespace Game.Penguins.Core.Implements.Game.GameBoard
                 for(int ver=0; ver<8;ver++)
                 {
                     var pointIndex = random.Next(0, points.Count);
-                    Board[hor, ver] = new Cell(CellType.Fish, points[pointIndex], ver, hor);
+                    Board[ver,hor] = new Cell(CellType.Fish, points[pointIndex], ver, hor);
                     points.RemoveAt(pointIndex);
                 }
             }
@@ -91,41 +91,41 @@ namespace Game.Penguins.Core.Implements.Game.GameBoard
                 case Direction.Left:
                     if (origin.V > 0)
                     {
-                        destination = board[origin.H, origin.V-1];
+                        destination = board[origin.V-1, origin.H];
                     }
                     break;
                 case Direction.Right:
                     if (origin.V < 7)
                     {
-                        destination = board[origin.H, origin.V+1];
+                        destination = board[origin.V+1, origin.H];
                     }
                     break;
                 case Direction.TopLeft:
-                    vDest = (origin.H % 2 == 0) ? origin.V : origin.V-1;
+                    vDest = (origin.H % 2 == 0) ? origin.V-1 : origin.V;
                     if (vDest >= 0 && origin.H > 0)
                     {
-                        destination = board[origin.H-1, vDest];
+                        destination = board[vDest,origin.H-1];
                     }
                     break;
                 case Direction.TopRight:
-                    vDest = (origin.H % 2 == 0) ? origin.V+1 : origin.V;
+                    vDest = (origin.H % 2 == 0) ? origin.V : origin.V+1;
                     if (vDest < 8 && origin.H > 0)
                     {
-                        destination = board[origin.H-1, vDest];
+                        destination = board[vDest,origin.H-1];
                     }
                     break;
                 case Direction.BottomLeft:
-                    vDest = (origin.H % 2 == 0) ? origin.V : origin.V -1;
+                    vDest = (origin.H % 2 == 0) ? origin.V-1 : origin.V;
                     if (vDest >= 0 && origin.H < 7)
                     {
-                        destination = board[origin.H+1, vDest];
+                        destination = board[vDest,origin.H+1];
                     }
                     break;
                 case Direction.BottomRight:
-                    vDest = (origin.H % 2 == 0) ? origin.V+1 : origin.V;
+                    vDest = (origin.H % 2 == 0) ? origin.V : origin.V+1;
                     if (vDest < 8 && origin.H < 7)
                     {
-                        destination = board[origin.H+1, vDest];
+                        destination = board[vDest,origin.H+1];
                     }
                     break;
             }
