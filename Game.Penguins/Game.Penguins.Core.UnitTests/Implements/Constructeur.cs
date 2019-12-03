@@ -39,8 +39,10 @@ namespace Game.Penguins.Core.UnitTests
 
             //Game Init
             TestGame = new Core.Implements.Game.GameBoard.Game();
+            TestGame.AddPlayer("player1", PlayerType.Human);
+            TestGame.AddPlayer("player2", PlayerType.Human);
         }
- 
+
         public List<Player> TestPlayers { get; }
         public Penguin TestPenguin { get; }
         public List<Cell> TestCells { get; set; }

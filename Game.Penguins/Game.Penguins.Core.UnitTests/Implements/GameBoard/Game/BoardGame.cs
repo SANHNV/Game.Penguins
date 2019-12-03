@@ -4,7 +4,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Game.Penguins.Core.UnitTests.Implements.GameBoard.Game
 {
     [TestClass]
-    class BoardGame : Constructeur
+    public class BoardGame : Constructeur
     {
         [TestMethod]
         public void TestBoardInit()

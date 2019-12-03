@@ -76,7 +76,7 @@ namespace Game.Penguins.Core.Implements.Game.GameBoard
         private int penguinsByPlayer = 0;
 
         /// <summary>
-        /// Create a Player
+        /// Create and Add a Player
         /// </summary>
         /// <param name="playerName"></param>
         /// <param name="playerType"></param>
@@ -172,8 +172,9 @@ namespace Game.Penguins.Core.Implements.Game.GameBoard
 
         /// <summary>
         /// Ajout nombre de pinguins et la couleur des joueurs
+        /// private hors test
         /// </summary>
-        private void InitPlayers()
+        public void InitPlayers()
         {
             penguinsByPlayer = Players.Count == 2 ? 4 : (Players.Count == 3 ? 3 : 2);
             foreach (var player in Players)
@@ -186,8 +187,9 @@ namespace Game.Penguins.Core.Implements.Game.GameBoard
 
         /// <summary>
         /// Increase index of currentPlayer
+        /// private hors test
         /// </summary>
-        private void CheckNextPlayer()
+        public void CheckNextPlayer()
         {
             currentPlayerIndex = (currentPlayerIndex +1 >= Players.Count) ? 0 : currentPlayerIndex+1 ;
             CurrentPlayer = Players[currentPlayerIndex];
@@ -251,8 +253,9 @@ namespace Game.Penguins.Core.Implements.Game.GameBoard
 
         /// <summary>
         /// Check if a Penguin is blocked and act
+        /// private hors test
         /// </summary>
-        private void CheckBlockedPenguins()
+        public void CheckBlockedPenguins()
         {
             foreach (var player in Players)
             {
