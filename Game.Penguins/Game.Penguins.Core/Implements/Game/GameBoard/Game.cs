@@ -73,7 +73,7 @@ namespace Game.Penguins.Core.Implements.Game.GameBoard
 
         public event EventHandler StateChanged;
         private int currentPlayerIndex = 0;
-        private int penguinsByPlayer = 0;
+        public int penguinsByPlayer = 0; //private hors test
 
         /// <summary>
         /// Create and Add a Player
@@ -151,7 +151,7 @@ namespace Game.Penguins.Core.Implements.Game.GameBoard
             {
                 //Make the move
                 MovePenguinOnMap(origin, destination);
-                // Check blocked penguins : aka ménage
+                // Check blocked penguins : aka clean up
                 CheckBlockedPenguins();
                 CheckActions();
             }
@@ -159,8 +159,9 @@ namespace Game.Penguins.Core.Implements.Game.GameBoard
 
         /// <summary>
         /// 
+        /// private hors test
         /// </summary>
-        private void CheckActions()
+        public void CheckActions()
         {
             CheckNextPlayer();
 
@@ -196,9 +197,10 @@ namespace Game.Penguins.Core.Implements.Game.GameBoard
         }
 
         /// <summary>
-        /// Modify NextAction Type
+        /// Modify NextAction Type : Place Penguins, EndGame or Move Penguin
+        /// private hors test
         /// </summary>
-        private void CheckNextAction()
+        public void CheckNextAction()
         {
             var board = Board as Plateau;
             // Need to place more penguins ?
@@ -210,7 +212,7 @@ namespace Game.Penguins.Core.Implements.Game.GameBoard
 
             if (!Players.Any(e => board.GetMyPenguins(e.Identifier).Count > 0))
             {
-                // No more penguins, we can stop the game :
+                // No more penguins, we can stop the game
                 NextAction = NextActionType.Nothing;
             }
             else
@@ -225,10 +227,11 @@ namespace Game.Penguins.Core.Implements.Game.GameBoard
 
         /// <summary>
         /// Place Penguin on destination, take points and nullify origin
+        /// private hors test
         /// </summary>
         /// <param name="origin"></param>
         /// <param name="destination"></param>
-        private void MovePenguinOnMap(ICell origin, ICell destination)
+        public void MovePenguinOnMap(ICell origin, ICell destination)
         {
             var originCell = origin as Cell;
             var destinationCell = destination as Cell;
@@ -242,17 +245,16 @@ namespace Game.Penguins.Core.Implements.Game.GameBoard
             //Add Points
             currentPlayer.Points += originCell.FishCount;
 
-            //origin nullify
+            //origin nullified
             originCell.CellType = CellType.Water;
             originCell.FishCount = 0;
             originCell.CurrentPenguin = null;
 
-            //
             CheckBlockedPenguins();
         }
 
         /// <summary>
-        /// Check if a Penguin is blocked and act
+        /// Check if any Penguin are blocked and act
         /// private hors test
         /// </summary>
         public void CheckBlockedPenguins()
@@ -271,7 +273,6 @@ namespace Game.Penguins.Core.Implements.Game.GameBoard
                         penguinCell.CellType = CellType.Water;
                         penguinCell.FishCount = 0;
                         penguinCell.CurrentPenguin = null;
-                        //gérer pingouin
                     }
                 }
             }

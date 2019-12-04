@@ -43,7 +43,6 @@ namespace Game.Penguins.Core.Implements.Game.GameBoard
         public List<Cell> GetMyPenguins(Guid playerIdentifier)
         {
             var result = new List<Cell>();
-            result = null;
             for (int i = 0; i < 8; i++)
             {
                 for (int j = 0; j < 8; j++)
