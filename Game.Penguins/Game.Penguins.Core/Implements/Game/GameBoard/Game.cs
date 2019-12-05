@@ -89,11 +89,58 @@ namespace Game.Penguins.Core.Implements.Game.GameBoard
         }
 
         /// <summary>
-        /// 
+        /// Move AI 
         /// </summary>
         public void Move()
         {
-            //TO DO MAYBE AI
+            int i = (int)CurrentPlayer.PlayerType;
+            var board = Board as Plateau;
+            var myPengs = board.GetMyPenguins(CurrentPlayer.Identifier);
+            Random alea = new Random();
+            int test = alea.Next(myPengs.Count);
+            do
+            {
+                var list = GetCellsWithMyFish(myPengs[test], i);
+                if (list.Count > 0)
+                    MoveManual(myPengs[test], list[alea.Next(list.Count)]);
+                else
+                {
+                    if (CurrentPlayer.PlayerType == PlayerType.AIEasy)
+                        i++;
+                    else if (CurrentPlayer.PlayerType == PlayerType.AIHard)
+                        i--;
+                    else {
+                        i = (i == 3) ? 1 : (i == 2) ? 3 : 1;
+                    };
+                }
+            } while (myPengs[test].CellType == CellType.FishWithPenguin);
+        }
+
+        public List<Cell> GetCellsWithMyFish(Cell origin, int nbFish)
+        {
+            List<Cell> possibleMove = new List<Cell>();
+            Cell newOrigin = origin;
+            Cell temp = null;
+
+            //Get all possible moves from origin, one direction at a time, cell by cell
+            for (int i = 0; i < 6; i++)
+            {
+                do
+                {
+                    temp = plateau.GetAvailableCell(newOrigin, (Direction)i);
+                    if (temp != null && temp.CellType == CellType.Fish)
+                    {
+                        possibleMove.Add(temp); //Merci Simon !
+                        newOrigin = temp;
+                    }
+                    else { temp = null; }
+                }
+                while (temp != null);
+                newOrigin = origin;
+            }
+
+            possibleMove.RemoveAll(el => el.FishCount != nbFish);
+            return possibleMove;
         }
 
         /// <summary>
@@ -140,8 +187,8 @@ namespace Game.Penguins.Core.Implements.Game.GameBoard
         }
 
         /// <summary>
-        /// Vérifie et déplace le pinguin si c'est bon
-        /// Sinon rien ne se passe et elle recommance
+        /// Check and move penguin if ok
+        /// Or do nothing and try again
         /// </summary>
         /// <param name="origin"></param>
         /// <param name="destination"></param>
@@ -158,7 +205,7 @@ namespace Game.Penguins.Core.Implements.Game.GameBoard
         }
 
         /// <summary>
-        /// 
+        /// Change CurrentPlayer and NextAction
         /// private hors test
         /// </summary>
         public void CheckActions()
@@ -279,12 +326,21 @@ namespace Game.Penguins.Core.Implements.Game.GameBoard
         }
 
         /// <summary>
-        /// TO DO AI
+        /// Place Penguin on Cell with one Fish Randomly
         /// </summary>
         public void PlacePenguin()
         {
-            /*if (CurrentPlayer.PlayerType != PlayerType.Human)
-                CurrentPlayer.IA.PlacePenguin();*/
+            int fakeV, fakeH;
+            Random aleatoire = new Random();
+            var test = Board.Board;
+
+            do
+            {
+                fakeV = aleatoire.Next(8);
+                fakeH = aleatoire.Next(8);
+                PlacePenguinManual(fakeV, fakeH);
+
+            } while (test[fakeV, fakeH].CellType != CellType.FishWithPenguin);
         }
 
         /// <summary>

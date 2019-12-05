@@ -9,7 +9,7 @@ namespace Game.Penguins.Core.UnitTests.Implements.GameBoard.Game
     public class MovePenguinOnMap : Constructeur
     {
         [TestMethod]
-        public void BlockedPenguin()
+        public void MovePenguin()
         {
             //Init
             TestGame.CurrentPlayer = TestGame.Players.Last();
