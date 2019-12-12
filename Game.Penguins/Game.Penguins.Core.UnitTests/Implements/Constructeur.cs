@@ -47,7 +47,7 @@ namespace Game.Penguins.Core.UnitTests
         public Penguin TestPenguin { get; }
         public List<Cell> TestCells { get; set; }
         public Plateau TestBoard { get; }
-        public Core.Implements.Game.GameBoard.Game TestGame { get; }
+        public Core.Implements.Game.GameBoard.Game TestGame { get; set; }
 
     }
 }

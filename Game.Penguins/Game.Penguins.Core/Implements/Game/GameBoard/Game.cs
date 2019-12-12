@@ -74,6 +74,7 @@ namespace Game.Penguins.Core.Implements.Game.GameBoard
         public event EventHandler StateChanged;
         private int currentPlayerIndex = 0;
         public int penguinsByPlayer = 0; //private hors test
+        public AI.AI AIObject;
 
         /// <summary>
         /// Create and Add a Player
@@ -85,6 +86,8 @@ namespace Game.Penguins.Core.Implements.Game.GameBoard
         {
             IPlayer temp = new Player(playerType, playerName);
             Players.Add(temp);
+            if (AIObject == null && (int)Players.Last().PlayerType != 0)
+                AIObject = new AI.AI();
             return Players.Last();
         }
 
@@ -93,54 +96,10 @@ namespace Game.Penguins.Core.Implements.Game.GameBoard
         /// </summary>
         public void Move()
         {
-            int i = (int)CurrentPlayer.PlayerType;
-            var board = Board as Plateau;
-            var myPengs = board.GetMyPenguins(CurrentPlayer.Identifier);
-            Random alea = new Random();
-            int test = alea.Next(myPengs.Count);
-            do
-            {
-                var list = GetCellsWithMyFish(myPengs[test], i);
-                if (list.Count > 0)
-                    MoveManual(myPengs[test], list[alea.Next(list.Count)]);
-                else
-                {
-                    if (CurrentPlayer.PlayerType == PlayerType.AIEasy)
-                        i++;
-                    else if (CurrentPlayer.PlayerType == PlayerType.AIHard)
-                        i--;
-                    else {
-                        i = (i == 3) ? 1 : (i == 2) ? 3 : 1;
-                    };
-                }
-            } while (myPengs[test].CellType == CellType.FishWithPenguin);
-        }
-
-        public List<Cell> GetCellsWithMyFish(Cell origin, int nbFish)
-        {
-            List<Cell> possibleMove = new List<Cell>();
-            Cell newOrigin = origin;
-            Cell temp = null;
-
-            //Get all possible moves from origin, one direction at a time, cell by cell
-            for (int i = 0; i < 6; i++)
-            {
-                do
-                {
-                    temp = plateau.GetAvailableCell(newOrigin, (Direction)i);
-                    if (temp != null && temp.CellType == CellType.Fish)
-                    {
-                        possibleMove.Add(temp); //Merci Simon !
-                        newOrigin = temp;
-                    }
-                    else { temp = null; }
-                }
-                while (temp != null);
-                newOrigin = origin;
-            }
-
-            possibleMove.RemoveAll(el => el.FishCount != nbFish);
-            return possibleMove;
+            List<Cell> moveToMake;
+            do { moveToMake = AIObject.Move(Board as Plateau, CurrentPlayer as Player); }
+            while (moveToMake.Count == 0);
+            MoveManual(moveToMake[0], moveToMake[1]);
         }
 
         /// <summary>
@@ -330,17 +289,8 @@ namespace Game.Penguins.Core.Implements.Game.GameBoard
         /// </summary>
         public void PlacePenguin()
         {
-            int fakeV, fakeH;
-            Random aleatoire = new Random();
-            var test = Board.Board;
-
-            do
-            {
-                fakeV = aleatoire.Next(8);
-                fakeH = aleatoire.Next(8);
-                PlacePenguinManual(fakeV, fakeH);
-
-            } while (test[fakeV, fakeH].CellType != CellType.FishWithPenguin);
+            Cell wherePenguinGo = AIObject.PlacePenguin(plateau);
+            PlacePenguinManual(wherePenguinGo.V, wherePenguinGo.H);
         }
 
         /// <summary>
@@ -358,7 +308,9 @@ namespace Game.Penguins.Core.Implements.Game.GameBoard
                 cell.CellType = CellType.FishWithPenguin;
                 cell.CurrentPenguin = new Penguin(currentPlayer);
             }
-            else { return; }
+            else {
+                return;
+            }
 
             currentPlayer.Penguins++;
 
@@ -371,6 +323,9 @@ namespace Game.Penguins.Core.Implements.Game.GameBoard
         public void StartGame()
         {
             InitPlayers();
+
+            if (AIObject != null)
+                AIObject.Players = Players;
 
             Board = new Plateau();
 
