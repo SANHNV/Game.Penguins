@@ -73,7 +73,7 @@ namespace Game.Penguins.Core.Implements.Game.GameBoard
 
         public event EventHandler StateChanged;
         private int currentPlayerIndex = 0;
-        public int penguinsByPlayer = 0; //private hors test
+        internal int penguinsByPlayer = 0; //private hors test
         public AI.AI AIObject;
 
         /// <summary>
@@ -108,7 +108,7 @@ namespace Game.Penguins.Core.Implements.Game.GameBoard
         /// <param name="origin"></param>
         /// <param name="destination"></param>
         /// <returns>bool</returns>
-        public bool CheckMove(Cell origin, Cell destination)
+        internal bool CheckMove(Cell origin, Cell destination)
         {
             bool possible = false;
             List<Cell> possibleMove = new List<Cell>();
@@ -165,9 +165,8 @@ namespace Game.Penguins.Core.Implements.Game.GameBoard
 
         /// <summary>
         /// Change CurrentPlayer and NextAction
-        /// private hors test
         /// </summary>
-        public void CheckActions()
+        internal void CheckActions()
         {
             CheckNextPlayer();
 
@@ -179,9 +178,8 @@ namespace Game.Penguins.Core.Implements.Game.GameBoard
 
         /// <summary>
         /// Ajout nombre de pinguins et la couleur des joueurs
-        /// private hors test
         /// </summary>
-        public void InitPlayers()
+        internal void InitPlayers()
         {
             penguinsByPlayer = Players.Count == 2 ? 4 : (Players.Count == 3 ? 3 : 2);
             foreach (var player in Players)
@@ -194,9 +192,8 @@ namespace Game.Penguins.Core.Implements.Game.GameBoard
 
         /// <summary>
         /// Increase index of currentPlayer
-        /// private hors test
         /// </summary>
-        public void CheckNextPlayer()
+        internal void CheckNextPlayer()
         {
             currentPlayerIndex = (currentPlayerIndex +1 >= Players.Count) ? 0 : currentPlayerIndex+1 ;
             CurrentPlayer = Players[currentPlayerIndex];
@@ -204,9 +201,8 @@ namespace Game.Penguins.Core.Implements.Game.GameBoard
 
         /// <summary>
         /// Modify NextAction Type : Place Penguins, EndGame or Move Penguin
-        /// private hors test
         /// </summary>
-        public void CheckNextAction()
+        internal void CheckNextAction()
         {
             var board = Board as Plateau;
             // Need to place more penguins ?
@@ -233,11 +229,10 @@ namespace Game.Penguins.Core.Implements.Game.GameBoard
 
         /// <summary>
         /// Place Penguin on destination, take points and nullify origin
-        /// private hors test
         /// </summary>
         /// <param name="origin"></param>
         /// <param name="destination"></param>
-        public void MovePenguinOnMap(ICell origin, ICell destination)
+        internal void MovePenguinOnMap(ICell origin, ICell destination)
         {
             var originCell = origin as Cell;
             var destinationCell = destination as Cell;
@@ -261,9 +256,8 @@ namespace Game.Penguins.Core.Implements.Game.GameBoard
 
         /// <summary>
         /// Check if any Penguin are blocked and act
-        /// private hors test
         /// </summary>
-        public void CheckBlockedPenguins()
+        internal void CheckBlockedPenguins()
         {
             foreach (var player in Players)
             {

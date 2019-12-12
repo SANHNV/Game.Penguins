@@ -18,15 +18,15 @@ namespace Game.Penguins.Core.Implements.Game.AI
         /// <summary>
         /// private except for test
         /// </summary>
-        public Player CurrentPlayer { get; set; }
+        internal Player CurrentPlayer { get; set; }
         /// <summary>
         /// private except for test
         /// </summary>
-        public IList<IPlayer> Players { get; set; }
+        internal IList<IPlayer> Players { get; set; }
         /// <summary>
         /// private except for test
         /// </summary>
-        public Random aleatoire { get; }
+        internal Random aleatoire { get; }
 
         /// <summary>
         /// Place Penguin on Cell with one Fish Randomly
@@ -46,11 +46,11 @@ namespace Game.Penguins.Core.Implements.Game.AI
         }
 
         /// <summary>
-        /// Move AI randomly except FishCount
+        /// Move AI randomly depending of the FishCount
         /// TO DO : 
         ///     not choose a Penguin randomly, 
         ///     check if destination is a deadend or not, 
-        ///     check if enemy Penguin is blocked
+        ///     check if enemy Penguin can be blocked
         /// </summary>
         /// <param name="board"></param>
         /// <param name="player"></param>
@@ -97,7 +97,7 @@ namespace Game.Penguins.Core.Implements.Game.AI
         /// <param name="nbFish">number of Fish</param>
         /// <param name="board"></param>
         /// <returns name="possibleMove"></returns>
-        public List<Cell> GetCellsWithMyFish(Cell origin, int nbFish, Plateau board)
+        internal List<Cell> GetCellsWithMyFish(Cell origin, int nbFish, Plateau board)
         {
             List<Cell> possibleMove = new List<Cell>();
             Cell newOrigin = origin;

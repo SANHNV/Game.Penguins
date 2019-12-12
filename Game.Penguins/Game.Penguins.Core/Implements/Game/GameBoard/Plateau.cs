@@ -40,7 +40,7 @@ namespace Game.Penguins.Core.Implements.Game.GameBoard
         /// </summary>
         /// <param name="playerIdentifier"></param>
         /// <returns></returns>
-        public List<Cell> GetMyPenguins(Guid playerIdentifier)
+        internal List<Cell> GetMyPenguins(Guid playerIdentifier)
         {
             var result = new List<Cell>();
             for (int i = 0; i < 8; i++)
@@ -62,7 +62,7 @@ namespace Game.Penguins.Core.Implements.Game.GameBoard
         /// </summary>
         /// <param name="origin"></param>
         /// <returns></returns>
-        public List<Cell> GetListCellsAvailableAround(Cell origin)
+        internal List<Cell> GetListCellsAvailableAround(Cell origin)
         {
             var result = new List<Cell>();
             for (int i = 0; i < 6; i++)
@@ -81,7 +81,7 @@ namespace Game.Penguins.Core.Implements.Game.GameBoard
         /// <param name="origin"></param>
         /// <param name="direction"></param>
         /// <returns></returns>
-        public Cell GetAvailableCell(Cell origin, Direction direction)
+        internal Cell GetAvailableCell(Cell origin, Direction direction)
         {
             var board = Board as Cell[,];
             Cell destination = null;

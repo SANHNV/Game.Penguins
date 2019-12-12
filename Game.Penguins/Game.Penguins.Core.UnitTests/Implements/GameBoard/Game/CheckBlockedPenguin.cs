@@ -12,6 +12,8 @@ namespace Game.Penguins.Core.UnitTests.Implements.GameBoard.Game
         {
             TestGame.CurrentPlayer = TestGame.Players.Last();
             TestGame.Board = new Core.Implements.Game.GameBoard.Plateau();
+            Core.Implements.Game.GameBoard.Cell temp = TestGame.Board.Board[0, 0] as Core.Implements.Game.GameBoard.Cell;
+            temp.FishCount = 1; //Else the Penguin will not be place if FishCount !=1
             TestGame.PlacePenguinManual(0, 0);
 
             //No Penguin Blocked
@@ -19,7 +21,7 @@ namespace Game.Penguins.Core.UnitTests.Implements.GameBoard.Game
             Assert.AreEqual(CellType.FishWithPenguin, TestGame.Board.Board[0, 0].CellType);
 
             //Penguin Blocked
-            Core.Implements.Game.GameBoard.Cell temp = TestGame.Board.Board[1, 0] as Core.Implements.Game.GameBoard.Cell;
+            temp = TestGame.Board.Board[1, 0] as Core.Implements.Game.GameBoard.Cell;
             temp.CellType = CellType.Empty;
             temp = TestGame.Board.Board[0, 1] as Core.Implements.Game.GameBoard.Cell;
             temp.CellType = CellType.Empty;
